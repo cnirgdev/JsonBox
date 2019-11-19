@@ -1,0 +1,14 @@
+BUILD_DIR := $(abspath $(shell pwd)/build)
+LIB_JSONBOX := build/libJsonBox.a
+
+all: $(LIB_JSONBOX)
+
+build/Makefile:
+	mkdir -p build
+	cd build && cmake ..
+
+$(LIB_JSONBOX) : build/Makefile
+	make -C build VERBOSE=$(VERBOSE) JsonBox
+
+clean:
+	rm -rf build
