@@ -27,11 +27,11 @@ namespace JsonBox {
 	static const std::string EMPTY_STRING = std::string();
 	
 	/**
-	 * Default int value returned by getInteger() when the value doesn't contain
+	 * Default int64_t value returned by getInteger() when the value doesn't contain
 	 * an integer.
 	 * @see JsonBox::Value::getInt
 	 */
-	static const int EMPTY_INT = 0;
+	static const int64_t EMPTY_INT = 0;
 	
 	/**
 	 * Default double value returned by getDouble() when the value doesn't
@@ -166,7 +166,7 @@ namespace JsonBox {
 		data(new std::string(newCString)) {
 	}
 
-	Value::Value(int newInt) : type(INTEGER), data(new int(newInt)) {
+	Value::Value(int64_t newInt) : type(INTEGER), data(new int64_t(newInt)) {
 	}
 
 	Value::Value(double newDouble) : type(DOUBLE), data(new double(newDouble)) {
@@ -190,7 +190,7 @@ namespace JsonBox {
 			break;
 
 		case INTEGER:
-			data.intValue = new int(*src.data.intValue);
+			data.intValue = new int64_t(*src.data.intValue);
 			break;
 
 		case DOUBLE:
@@ -230,7 +230,7 @@ namespace JsonBox {
 				break;
 
 			case INTEGER:
-				data.intValue = new int(*src.data.intValue);
+				data.intValue = new int64_t(*src.data.intValue);
 				break;
 
 			case DOUBLE:
@@ -271,7 +271,7 @@ namespace JsonBox {
 		return *this;
 	}
 
-	Value &Value::operator=(int src) {
+	Value &Value::operator=(int64_t src) {
 		this->setInteger(src);
 
 		return *this;
@@ -521,22 +521,22 @@ namespace JsonBox {
 		}
 	}
 
-	int Value::getInteger() const {
+	int64_t Value::getInteger() const {
 		return tryGetInteger(EMPTY_INT);
 	}
 
-	int Value::tryGetInteger(int defaultValue) const {
-		return (type == INTEGER) ? (*data.intValue) : ((type == DOUBLE) ? (static_cast<int>(*data.doubleValue)) : (defaultValue));
+	int64_t Value::tryGetInteger(int64_t defaultValue) const {
+		return (type == INTEGER) ? (*data.intValue) : ((type == DOUBLE) ? (static_cast<int64_t>(*data.doubleValue)) : (defaultValue));
 	}
 
-	void Value::setInteger(int newInteger) {
+	void Value::setInteger(int64_t newInteger) {
 		if (type == INTEGER) {
 			*data.intValue = newInteger;
 
 		} else {
 			clear();
 			type = INTEGER;
-			data.intValue = new int(newInteger);
+			data.intValue = new int64_t(newInteger);
 		}
 	}
 
@@ -816,7 +816,7 @@ namespace JsonBox {
 		stringValue(newStringValue) {
 	}
 
-	Value::ValueDataPointer::ValueDataPointer(int *newIntValue) :
+	Value::ValueDataPointer::ValueDataPointer(int64_t *newIntValue) :
 		intValue(newIntValue) {
 	}
 
@@ -1101,7 +1101,7 @@ namespace JsonBox {
 			result.setDouble(doubleResult);
 
 		} else {
-			int intResult;
+			int64_t intResult;
 			constructing >> intResult;
 			result.setInteger(intResult);
 		}
