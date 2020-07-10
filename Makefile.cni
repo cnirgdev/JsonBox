@@ -1,11 +1,19 @@
 BUILD_DIR := $(abspath $(shell pwd)/build)
 LIB_JSONBOX := build/libJsonBox.a
 
+SDK_ROOT := $(abspath $(shell pwd)/../../otx-sdk-6.2.0)
+
+ifeq ($(PLATFORM), edge)
+	MARVELL_TOOLS_ROOT := $(SDK_ROOT)/marvell-tools-233.0
+	# compiler
+	CXX := $(MARVELL_TOOLS_ROOT)/bin/aarch64-marvell-linux-gnu-g++
+endif
+
 all: $(LIB_JSONBOX)
 
 build/Makefile:
 	mkdir -p build
-	cd build && cmake ..
+	cd build && CXX=$(CXX) cmake3 ..
 
 $(LIB_JSONBOX) : build/Makefile
 	make -C build VERBOSE=$(VERBOSE) JsonBox
