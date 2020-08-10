@@ -14,6 +14,8 @@ all: $(LIB_JSONBOX)
 build/Makefile:
 	mkdir -p build
 	cd build && CXX=$(CXX) cmake3 ..
+	# Add -fPIC flag for JNI
+	sed -i 's/^CMAKE_CXX_FLAGS:STRING=/CMAKE_CXX_FLAGS:STRING=-fPIC/' build/CMakeCache.txt
 
 $(LIB_JSONBOX) : build/Makefile
 	make -C build VERBOSE=$(VERBOSE) JsonBox
