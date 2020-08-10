@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "Export.h"
+#include "stdint.h"
 
 namespace JsonBox {
 	/**
