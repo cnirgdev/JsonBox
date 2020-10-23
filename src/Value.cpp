@@ -602,7 +602,7 @@ namespace JsonBox {
 	}
 
 	bool Value::tryGetBoolean(bool defaultValue) const {
-		return (type == BOOLEAN) ? (*data.boolValue) : (EMPTY_BOOL);
+		return (type == BOOLEAN) ? (*data.boolValue) : (defaultValue);
 	}
 
 	void Value::setBoolean(bool newBoolean) {
